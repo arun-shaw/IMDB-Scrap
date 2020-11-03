@@ -16,11 +16,12 @@ class ImdbSpider(scrapy.Spider):
         ccode=response.css('select.countries option::attr(value)').extract()
         cname=response.css('select.countries option::text').extract()
         print(ccode.__len__(),'........',cname.__len__())
+        # getting the country code and Name
         for (c,m) in zip(ccode,cname):
             #print(c,':',m)
             yield scrapy.Request(url='https://www.imdb.com/search/title/?countries='+c+'&adult=include&count=250',
                              callback=self.pdata,meta={'ccode':c,'cname':m})
-
+    # scrapping movie details for each country.
     def pdata(self,response):
         #print(response.css('h3.lister-item-header a::text').extract())
         #select=Selector(response)
@@ -47,6 +48,7 @@ class ImdbSpider(scrapy.Spider):
             items['Country_Code']=str(ccode).upper()
             items['Country_Name']=str(cname).capitalize()
             yield items
+            # scrapping available next page
         next_page= response.css('a.lister-page-next.next-page::attr(href)').get()
         print(next_page)
         if next_page is not None:
