@@ -12,7 +12,7 @@ class ImdbcrawlPipeline(object):
 
 
     def create_Conn(self):
-        self.conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=IDEA-PC;DATABASE=PyMovies;UID=sa;PWD=')
+        self.conn = pyodbc.connect('DRIVER={MySQL ODBC 8.0 ANSI Driver};SERVER=localhost;DATABASE=imdb_movies;UID=root;PWD=Welc0me@run')
         self.curr = self.conn.cursor()
 
     def store_db(self,item):
